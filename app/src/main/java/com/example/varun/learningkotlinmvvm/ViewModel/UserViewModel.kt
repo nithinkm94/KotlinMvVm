@@ -2,12 +2,17 @@ package com.example.varun.learningkotlinmvvm.ViewModel
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import android.util.Log
 import com.example.varun.learningkotlinmvvm.Model.User
+import com.example.varun.learningkotlinmvvm.db.UserDatabase
 
 class UserViewModel : ViewModel {
 
+    private var userDatabase: UserDatabase? = null
 
-    var id = ""
+    private var user: User? = null
+
+    var id: Long? = null
     var name = ""
     var email = ""
 
@@ -18,26 +23,46 @@ class UserViewModel : ViewModel {
         this.email = user.email
     }
 
-    constructor(id: String) : super() {
+    constructor(id: Long) : super() {
         this.id = id
     }
 
 
     var arraylistmutablelivedata = MutableLiveData<ArrayList<UserViewModel>>()
-    var arrayList = ArrayList<UserViewModel>()
+    var usermutablelivedata = MutableLiveData<UserViewModel>()
+
+
 
     fun getArrayList(): MutableLiveData<ArrayList<UserViewModel>> {
-
-        val user1 = User("1", "varun", "v@g.com")
-        val user2 = User("2", "silpa", "s@g.com")
+        var arrayList = ArrayList<UserViewModel>()
 
 
-        val userViewModel1: UserViewModel = UserViewModel(user1)
-        val userViewModel2: UserViewModel = UserViewModel(user2)
+        var userView: UserViewModel? = null
+
+        val allusers =
+                userDatabase?.userDataDao()?.getAll()
+
+        if (allusers == null || allusers?.size == 0) {
+            Log.d("UserViewModel", "NULL")
+        } else {
+
+            for (i in allusers) {
+                userView = UserViewModel(i)
+                arrayList.add(userView)
+
+            }
+
+        }
+        /* val user1 = User(1, "varun", "v@g.com")
+         val user2 = User(2, "silpa", "s@g.com")
 
 
-        arrayList!!.add(userViewModel1)
-        arrayList!!.add(userViewModel2)
+         val userViewModel1: UserViewModel = UserViewModel(user1)
+         val userViewModel2: UserViewModel = UserViewModel(user2)
+
+
+         arrayList!!.add(userViewModel1)
+         arrayList!!.add(userViewModel2)*/
 
         arraylistmutablelivedata.value = arrayList
 
@@ -45,11 +70,24 @@ class UserViewModel : ViewModel {
         return arraylistmutablelivedata
     }
 
-    var usermutablelivedata = MutableLiveData<UserViewModel>()
-    
-    fun getUser(id: String): MutableLiveData<UserViewModel> {
-        val userViewModel1: UserViewModel = UserViewModel("1")
+
+    fun getUser(id: Long): MutableLiveData<UserViewModel> {
+        val user1 = User(1, "varun", "v@g.com")
+        val userViewModel1: UserViewModel = UserViewModel(user1)
         usermutablelivedata.value = userViewModel1
+        var userView: UserViewModel? = null
+
+        val singleUser =
+                userDatabase?.userDataDao()?.loadSingle(id)
+
+        if (singleUser == null) {
+            Log.d("UserViewModel", "NULL")
+        } else {
+            userView = UserViewModel(singleUser)
+            usermutablelivedata.value = userView
+        }
+
+
 
         return usermutablelivedata
     }
