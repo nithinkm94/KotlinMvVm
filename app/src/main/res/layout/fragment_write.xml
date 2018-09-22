@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data>
+    <data class="UserBinding">
 
         <variable
-            name="user"
+            name="usermodel"
             type="com.example.varun.learningkotlinmvvm.ViewModel.UserViewModel" />
     </data>
 
 <android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools"
     android:layout_height="match_parent">
 
     <EditText
@@ -23,9 +23,10 @@
         android:layout_marginStart="@dimen/margin_common"
         android:layout_marginTop="132dp"
         android:hint="@string/txt_hint_name"
+        android:inputType="text"
+        android:text="@{usermodel.name}"
         android:textColorHint="@color/colorAccent"
         android:textSize="@dimen/txt_size"
-        android:text="@{user.name}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.44"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +34,6 @@
 
     <EditText
         android:id="@+id/ed_email"
-        android:editable="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_common"
@@ -41,10 +41,10 @@
         android:layout_marginTop="48dp"
         android:ems="10"
         android:hint="@string/txt_hint_email"
+        android:inputType="text"
+        android:text="@{usermodel.email}"
         android:textColorHint="@color/colorAccent"
-        android:inputType="textEmailAddress"
         android:textSize="@dimen/txt_size"
-        android:text="@{user.email}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +62,6 @@
         android:textSize="@dimen/txt_size"
         android:textAlignment="center"
         android:textColor="@color/colorAccent"
-        android:onClick="@{user::onButtonClick}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ed_email" />
