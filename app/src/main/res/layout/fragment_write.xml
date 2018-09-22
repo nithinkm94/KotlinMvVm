@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="user"
+            type="com.example.varun.learningkotlinmvvm.ViewModel.UserViewModel" />
+    </data>
+
+<android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView"
-        android:background="@color/colorPrimary"
+    <EditText
+        android:id="@+id/ed_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_common"
@@ -17,29 +25,30 @@
         android:hint="@string/txt_hint_name"
         android:textColorHint="@color/colorAccent"
         android:textSize="@dimen/txt_size"
+        android:text="@{user.name}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.44"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText"
-
+        android:id="@+id/ed_email"
+        android:editable="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_common"
         android:layout_marginStart="@dimen/margin_common"
         android:layout_marginTop="48dp"
-        android:background="@color/colorPrimary"
         android:ems="10"
         android:hint="@string/txt_hint_email"
         android:textColorHint="@color/colorAccent"
         android:inputType="textEmailAddress"
         android:textSize="@dimen/txt_size"
+        android:text="@{user.email}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/ed_name" />
 
     <Button
         android:id="@+id/button"
@@ -53,9 +62,10 @@
         android:textSize="@dimen/txt_size"
         android:textAlignment="center"
         android:textColor="@color/colorAccent"
+        android:onClick="@{user::onButtonClick}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
-
+        app:layout_constraintTop_toBottomOf="@+id/ed_email" />
 
 </android.support.constraint.ConstraintLayout>
+</layout>
