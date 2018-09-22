@@ -1,18 +1,17 @@
 package com.example.varun.learningkotlinmvvm.Model
 
+import android.arch.persistence.room.ColumnInfo
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
 import java.util.*
 
+@Entity(tableName = "User")
+data class User(@PrimaryKey(autoGenerate = true) var id: Long?,
+                @ColumnInfo(name = "name") var name: String,
+                @ColumnInfo(name = "email") var email: String
 
-class User {
+) {
 
+    constructor() : this(null, "", "")
 
-    var id = ""
-    var name = ""
-    var email = ""
-
-    constructor(id: String, name: String, email: String) {
-        this.id = id
-        this.name = name
-        this.email = email
-    }
 }

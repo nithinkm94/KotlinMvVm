@@ -51,7 +51,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ed_name" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_save"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

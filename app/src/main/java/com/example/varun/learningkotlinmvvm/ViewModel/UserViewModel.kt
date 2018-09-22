@@ -7,7 +7,7 @@ import com.example.varun.learningkotlinmvvm.Model.User
 class UserViewModel : ViewModel {
 
 
-    var id = ""
+    var id: Long? = null
     var name = ""
     var email = ""
 
@@ -18,7 +18,7 @@ class UserViewModel : ViewModel {
         this.email = user.email
     }
 
-    constructor(id: String) : super() {
+    constructor(id: Long) : super() {
         this.id = id
     }
 
@@ -26,10 +26,11 @@ class UserViewModel : ViewModel {
     var arraylistmutablelivedata = MutableLiveData<ArrayList<UserViewModel>>()
     var arrayList = ArrayList<UserViewModel>()
 
+
     fun getArrayList(): MutableLiveData<ArrayList<UserViewModel>> {
 
-        val user1 = User("1", "varun", "v@g.com")
-        val user2 = User("2", "silpa", "s@g.com")
+        val user1 = User(1, "varun", "v@g.com")
+        val user2 = User(2, "silpa", "s@g.com")
 
 
         val userViewModel1: UserViewModel = UserViewModel(user1)
@@ -46,9 +47,9 @@ class UserViewModel : ViewModel {
     }
 
     var usermutablelivedata = MutableLiveData<UserViewModel>()
-    
+
     fun getUser(id: String): MutableLiveData<UserViewModel> {
-        val userViewModel1: UserViewModel = UserViewModel("1")
+        val userViewModel1: UserViewModel = UserViewModel(1)
         usermutablelivedata.value = userViewModel1
 
         return usermutablelivedata
