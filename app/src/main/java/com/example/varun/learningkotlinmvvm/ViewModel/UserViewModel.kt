@@ -3,8 +3,10 @@ package com.example.varun.learningkotlinmvvm.ViewModel
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.util.Log
+import android.view.View
 import com.example.varun.learningkotlinmvvm.Model.User
 import com.example.varun.learningkotlinmvvm.db.UserDatabase
+import java.util.logging.Logger
 
 class UserViewModel : ViewModel {
 
@@ -72,9 +74,7 @@ class UserViewModel : ViewModel {
 
 
     fun getUser(id: Long): MutableLiveData<UserViewModel> {
-        val user1 = User(1, "varun", "v@g.com")
-        val userViewModel1: UserViewModel = UserViewModel(user1)
-        usermutablelivedata.value = userViewModel1
+
         var userView: UserViewModel? = null
 
         val singleUser =
@@ -87,9 +87,13 @@ class UserViewModel : ViewModel {
             usermutablelivedata.value = userView
         }
 
-
-
         return usermutablelivedata
+    }
+
+    fun setData(name: String, email: String) {
+        var user: User = User(null, name, email)
+        val addedID = userDatabase?.userDataDao()?.insert(user)
+        Log.d("vehicle_lsit_item", "Inserted ID $addedID")
     }
 
 }

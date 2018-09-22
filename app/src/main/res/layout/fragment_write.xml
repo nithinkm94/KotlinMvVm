@@ -9,20 +9,23 @@
             type="com.example.varun.learningkotlinmvvm.ViewModel.UserViewModel" />
     </data>
 
-<android.support.constraint.ConstraintLayout
+<android.support.constraint.ConstraintLayout android:id="@+id/fragment_write"
+    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:bind="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <EditText
         android:id="@+id/ed_name"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_common"
         android:layout_marginStart="@dimen/margin_common"
         android:layout_marginTop="132dp"
         android:hint="@string/txt_hint_name"
+        android:inputType="text"
+        android:text="@{usermodel.name}"
+        android:textColorHint="@color/colorAccent"
         android:textSize="@dimen/txt_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.44"
@@ -32,12 +35,16 @@
     <EditText
         android:id="@+id/ed_email"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_common"
         android:layout_marginStart="@dimen/margin_common"
         android:layout_marginTop="48dp"
-        android:textSize="@dimen/txt_size"
+        android:ems="10"
         android:hint="@string/txt_hint_email"
+        android:inputType="text"
+        android:text="@{usermodel.email}"
+        android:textColorHint="@color/colorAccent"
+        android:textSize="@dimen/txt_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,18 +54,17 @@
         android:id="@+id/btn_save"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_common"
         android:layout_marginStart="@dimen/margin_common"
         android:layout_marginTop="92dp"
         android:text="@string/btn_save"
         android:textSize="@dimen/txt_size"
         android:textAlignment="center"
+        android:textColor="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ed_email" />
 
-
 </android.support.constraint.ConstraintLayout>
-
 </layout>
