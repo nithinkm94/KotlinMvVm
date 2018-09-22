@@ -10,6 +10,8 @@ import com.example.varun.learningkotlinmvvm.ViewModel.UserViewModel
 import com.example.varun.learningkotlinmvvm.databinding.UserBinding
 
 class CustomAdapter(private val context: Context, private val arrayList: ArrayList<UserViewModel>) : RecyclerView.Adapter<CustomAdapter.CustomView>() {
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomView {
 
         val layoutInflater = LayoutInflater.from(parent.context)

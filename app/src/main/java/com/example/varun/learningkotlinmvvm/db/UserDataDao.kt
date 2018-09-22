@@ -12,6 +12,11 @@ interface UserDataDao {
     @Query("SELECT * from User")
     fun getAll(): List<User>
 
+
+    @Query("SELECT * FROM User WHERE id = :id ")
+    fun loadSingle(id: Long): User
+
+
     @Insert(onConflict = REPLACE)
     fun insert(user: User)
 
