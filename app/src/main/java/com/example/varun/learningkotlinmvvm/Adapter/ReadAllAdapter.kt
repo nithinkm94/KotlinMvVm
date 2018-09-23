@@ -10,7 +10,7 @@ import com.example.varun.learningkotlinmvvm.Model.User
 import com.example.varun.learningkotlinmvvm.ViewModel.UserViewModel
 import com.example.varun.learningkotlinmvvm.databinding.UsersBinding
 
-class CustomAdapter(private val context: Context, private val arrayList: List<User>) : RecyclerView.Adapter<CustomAdapter.CustomView>() {
+class ReadAllAdapter(private val context: Context, private val arrayList: List<User>) : RecyclerView.Adapter<ReadAllAdapter.CustomView>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomView {

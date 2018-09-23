@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.varun.learningkotlinmvvm.Adapter.CustomAdapter
+import com.example.varun.learningkotlinmvvm.Adapter.ReadAllAdapter
 import com.example.varun.learningkotlinmvvm.MainActivity
 import com.example.varun.learningkotlinmvvm.R
 import com.example.varun.learningkotlinmvvm.ViewModel.UserViewModel
@@ -16,12 +16,11 @@ import com.example.varun.learningkotlinmvvm.ViewModel.UserViewModel
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_readwrite.*
-import org.jetbrains.anko.doAsync
 
 
 class ReadAllfragment:Fragment(){
      lateinit var mActivity: MainActivity
-    private var customAdapter: CustomAdapter? = null
+    private var readAllAdapter: ReadAllAdapter? = null
     private var userViewModel: UserViewModel? = null
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -39,9 +38,9 @@ class ReadAllfragment:Fragment(){
 
         userViewModel!!.getArrayList().observe(this, Observer { userViewModels ->
 
-            customAdapter = CustomAdapter(mActivity, userViewModels!!)
+            readAllAdapter = ReadAllAdapter(mActivity, userViewModels!!)
             recycler_listdata!!.layoutManager = LinearLayoutManager(mActivity) as RecyclerView.LayoutManager?
-            recycler_listdata!!.setAdapter(customAdapter)
+            recycler_listdata!!.setAdapter(readAllAdapter)
 
 
         })

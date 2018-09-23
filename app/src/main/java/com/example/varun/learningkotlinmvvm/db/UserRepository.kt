@@ -4,11 +4,12 @@ import android.app.Application
 import android.arch.lifecycle.LiveData
 import android.os.AsyncTask
 import com.example.varun.learningkotlinmvvm.Model.User
+import java.util.concurrent.Executors
 
 class UserRepository {
 
-    private lateinit var userDataDao: UserDataDao
-    private lateinit var mAllUsers: LiveData<List<User>>
+    private var userDataDao: UserDataDao
+    private var mAllUsers: LiveData<List<User>>
 
     constructor(application: Application) {
         val db = UserDatabase.getDatabase(application)
@@ -17,12 +18,18 @@ class UserRepository {
     }
 
 
-    internal fun getAll(): LiveData<List<User>> {
+    fun getAll(): LiveData<List<User>> {
         return mAllUsers
     }
 
     fun insert(user: User) {
         insertAsyncTask(userDataDao).execute(user)
+    }
+
+    fun searchUser(id: Int): User {
+        var user: User = userDataDao.loadSingle(id)
+
+        return user
     }
 
     private class insertAsyncTask internal constructor(private val mAsyncTaskDao: UserDataDao) : AsyncTask<User, Void, Void>() {

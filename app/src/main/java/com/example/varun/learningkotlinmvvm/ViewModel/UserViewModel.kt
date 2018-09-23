@@ -21,9 +21,8 @@ class UserViewModel : ViewModel {
 
     private var allUsers: LiveData<List<User>>? = null
 
-    var myExecutor = Executors.newSingleThreadExecutor()
 
-    var id: Long? = null
+    var id: Int? = null
     var name: String? = null
     var email: String? = null
 
@@ -33,7 +32,7 @@ class UserViewModel : ViewModel {
     }
 
 
-    constructor(id: Long?, name: String?, email: String?) : super() {
+    constructor(id: Int?, name: String?, email: String?) : super() {
         this.id = id
         this.name = name
         this.email = email
@@ -48,39 +47,30 @@ class UserViewModel : ViewModel {
         userRepository.insert(user)
     }
 
-    var usermutablelivedata = MutableLiveData<UserViewModel>()
-
-
     fun getArrayList(): LiveData<List<User>> {
 
-        return allUsers!!
+        return getAll()
     }
 
 
-    fun getUser(id: Long): MutableLiveData<UserViewModel> {
+    fun getUser(id: Int): User {
 
-        var userView: UserViewModel? = null
+        var mUser: User = userRepository.searchUser(id)
+        return mUser
 
-        val singleUser = "" /*              userDatabase?.userDataDao()?.loadSingle(id)*/
-
-        if (singleUser == null) {
-            Log.d("UserViewModel", "NULL")
-        } else {
-            // userView = UserViewModel(singleUser)
-            usermutablelivedata.value = userView
-        }
-
-        return usermutablelivedata
     }
 
     fun setData(name: String, email: String) {
         var user: User = User(null, name, email)
-        myExecutor.execute {
 
             val addedID = insert(user)
             Log.d("UserViewModel", "Inserted ID $addedID")
         }
 
+
+    fun searchUser(userId: String): User {
+
+        return getUser(Integer.parseInt(userId))
     }
 
 }
