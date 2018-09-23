@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <data class="SearchBinding">
-
-        <variable
-            name="searchmodel"
-            type="com.example.varun.learningkotlinmvvm.ViewModel.UserViewModel" />
-    </data>
-
-    <android.support.constraint.ConstraintLayout
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:id="@+id/fragment_read"
     android:layout_height="match_parent">
 
     <EditText
@@ -45,17 +37,17 @@
         app:layout_constraintTop_toBottomOf="@+id/ed_idsearch" />
 
         <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_search"
             app:layout_constraintVertical_bias="0.127">
 
@@ -66,7 +58,6 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="@{searchmodel.name}"
                 android:textSize="@dimen/txt_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +70,6 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="@{searchmodel.email}"
                 android:textSize="@dimen/txt_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -89,4 +79,3 @@
 
 
     </android.support.constraint.ConstraintLayout>
-</layout>

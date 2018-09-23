@@ -4,7 +4,7 @@ import android.app.Application
 import android.arch.lifecycle.LiveData
 import android.os.AsyncTask
 import com.example.varun.learningkotlinmvvm.Model.User
-import java.util.concurrent.Executors
+import com.example.varun.learningkotlinmvvm.Fragment.showSnackbar
 
 class UserRepository {
 
@@ -17,6 +17,9 @@ class UserRepository {
         this.mAllUsers = userDataDao.getAll()
     }
 
+    companion object {
+        var showSnackbar: showSnackbar? = null
+    }
 
     fun getAll(): LiveData<List<User>> {
         return mAllUsers
@@ -26,9 +29,11 @@ class UserRepository {
         insertAsyncTask(userDataDao).execute(user)
     }
 
-    fun searchUser(id: Int): User {
-        var user: User = userDataDao.loadSingle(id)
-
+    fun searchUser(id: Int): LiveData<User> {
+        var user = userDataDao.loadSingle(id)
+        if (user == null) {
+            showSnackbar!!.show()
+        }
         return user
     }
 
@@ -37,6 +42,13 @@ class UserRepository {
         override fun doInBackground(vararg params: User): Void? {
             mAsyncTaskDao.insert(params[0])
             return null
+        }
+
+        override fun onPostExecute(result: Void?) {
+            if (showSnackbar != null) {
+                showSnackbar!!.show()
+            }
+            super.onPostExecute(result)
         }
     }
 

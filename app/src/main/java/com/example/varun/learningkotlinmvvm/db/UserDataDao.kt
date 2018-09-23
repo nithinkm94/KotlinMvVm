@@ -15,7 +15,7 @@ interface UserDataDao {
 
 
     @Query("SELECT * FROM User WHERE id = :id ")
-    fun loadSingle(id: Int): User
+    fun loadSingle(id: Int): LiveData<User>
 
 
     @Insert(onConflict = REPLACE)

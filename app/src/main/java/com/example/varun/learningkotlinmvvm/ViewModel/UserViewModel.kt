@@ -1,21 +1,16 @@
 package com.example.varun.learningkotlinmvvm.ViewModel
 
 import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.util.Log
-import android.view.View
 import com.example.varun.learningkotlinmvvm.Model.User
-import com.example.varun.learningkotlinmvvm.MyApp
-import com.example.varun.learningkotlinmvvm.db.UserDatabase
 import com.example.varun.learningkotlinmvvm.db.UserRepository
-import org.jetbrains.anko.doAsync
-import java.util.concurrent.Executors
-import java.util.logging.Logger
+import android.text.Editable
+
 
 class UserViewModel : ViewModel {
+
 
     private lateinit var userRepository: UserRepository
 
@@ -39,9 +34,6 @@ class UserViewModel : ViewModel {
     }
 
 
-    internal fun getAll(): LiveData<List<User>> {
-        return allUsers!!
-    }
 
     fun insert(user: User) {
         userRepository.insert(user)
@@ -49,15 +41,7 @@ class UserViewModel : ViewModel {
 
     fun getArrayList(): LiveData<List<User>> {
 
-        return getAll()
-    }
-
-
-    fun getUser(id: Int): User {
-
-        var mUser: User = userRepository.searchUser(id)
-        return mUser
-
+        return allUsers!!
     }
 
     fun setData(name: String, email: String) {
@@ -68,9 +52,10 @@ class UserViewModel : ViewModel {
         }
 
 
-    fun searchUser(userId: String): User {
+    fun searchUser(userId: String): LiveData<User> {
 
-        return getUser(Integer.parseInt(userId))
+        return userRepository.searchUser(Integer.parseInt(userId))
     }
+
 
 }
