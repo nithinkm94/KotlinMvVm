@@ -1,75 +1,59 @@
 package com.example.varun.learningkotlinmvvm.ViewModel
 
+import android.app.Application
+import android.arch.lifecycle.AndroidViewModel
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.util.Log
 import android.view.View
 import com.example.varun.learningkotlinmvvm.Model.User
+import com.example.varun.learningkotlinmvvm.MyApp
 import com.example.varun.learningkotlinmvvm.db.UserDatabase
+import com.example.varun.learningkotlinmvvm.db.UserRepository
+import org.jetbrains.anko.doAsync
+import java.util.concurrent.Executors
 import java.util.logging.Logger
 
 class UserViewModel : ViewModel {
 
-    private var userDatabase: UserDatabase? = null
+    private lateinit var userRepository: UserRepository
 
-    private var user: User? = null
+    private var allUsers: LiveData<List<User>>? = null
+
+    var myExecutor = Executors.newSingleThreadExecutor()
 
     var id: Long? = null
-    var name = ""
-    var email = ""
+    var name: String? = null
+    var email: String? = null
 
-    constructor() : super()
-    constructor(user: User) : super() {
-        this.id = user.id
-        this.name = user.name
-        this.email = user.email
+    constructor() : super() {
+        this.userRepository = UserRepository(application = Application())
+        this.allUsers = userRepository!!.getAll()
     }
 
-    constructor(id: Long) : super() {
+
+    constructor(id: Long?, name: String?, email: String?) : super() {
         this.id = id
+        this.name = name
+        this.email = email
     }
 
 
-    var arraylistmutablelivedata = MutableLiveData<ArrayList<UserViewModel>>()
+    internal fun getAll(): LiveData<List<User>> {
+        return allUsers!!
+    }
+
+    fun insert(user: User) {
+        userRepository.insert(user)
+    }
+
     var usermutablelivedata = MutableLiveData<UserViewModel>()
 
 
+    fun getArrayList(): LiveData<List<User>> {
 
-    fun getArrayList(): MutableLiveData<ArrayList<UserViewModel>> {
-        var arrayList = ArrayList<UserViewModel>()
-
-
-        var userView: UserViewModel? = null
-
-        val allusers =
-                userDatabase?.userDataDao()?.getAll()
-
-        if (allusers == null || allusers?.size == 0) {
-            Log.d("UserViewModel", "NULL")
-        } else {
-
-            for (i in allusers) {
-                userView = UserViewModel(i)
-                arrayList.add(userView)
-
-            }
-
-        }
-        /* val user1 = User(1, "varun", "v@g.com")
-         val user2 = User(2, "silpa", "s@g.com")
-
-
-         val userViewModel1: UserViewModel = UserViewModel(user1)
-         val userViewModel2: UserViewModel = UserViewModel(user2)
-
-
-         arrayList!!.add(userViewModel1)
-         arrayList!!.add(userViewModel2)*/
-
-        arraylistmutablelivedata.value = arrayList
-
-
-        return arraylistmutablelivedata
+        return allUsers!!
     }
 
 
@@ -77,13 +61,12 @@ class UserViewModel : ViewModel {
 
         var userView: UserViewModel? = null
 
-        val singleUser =
-                userDatabase?.userDataDao()?.loadSingle(id)
+        val singleUser = "" /*              userDatabase?.userDataDao()?.loadSingle(id)*/
 
         if (singleUser == null) {
             Log.d("UserViewModel", "NULL")
         } else {
-            userView = UserViewModel(singleUser)
+            // userView = UserViewModel(singleUser)
             usermutablelivedata.value = userView
         }
 
@@ -92,8 +75,12 @@ class UserViewModel : ViewModel {
 
     fun setData(name: String, email: String) {
         var user: User = User(null, name, email)
-        val addedID = userDatabase?.userDataDao()?.insert(user)
-        Log.d("vehicle_lsit_item", "Inserted ID $addedID")
+        myExecutor.execute {
+
+            val addedID = insert(user)
+            Log.d("UserViewModel", "Inserted ID $addedID")
+        }
+
     }
 
 }

@@ -8,20 +8,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import com.example.varun.learningkotlinmvvm.MainActivity
 import com.example.varun.learningkotlinmvvm.R
 import com.example.varun.learningkotlinmvvm.ViewModel.UserViewModel
+import kotlinx.android.synthetic.main.fragment_write.*
 
 class Writefragment : Fragment(), View.OnClickListener {
 
-    private lateinit var btn_back: Button
-
+    lateinit var userViewModel: UserViewModel
     override fun onClick(v: View?) {
 
         when (v?.id) {
-            R.id.btn_back -> {
-                //var userViewModel: UserViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
-                mActivity.finish()
+            R.id.btn_save -> {
+                userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
+
+                userViewModel.setData(ed_name.getText().toString(), ed_email.getText().toString())
             }
 
             else -> {
@@ -43,11 +45,13 @@ class Writefragment : Fragment(), View.OnClickListener {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val v = inflater?.inflate(R.layout.fragment_write, container, false)
 
-        btn_back = v.findViewById(R.id.btn_back)
-        btn_back.setOnClickListener(this)
-        return v
+        return inflater?.inflate(R.layout.fragment_write, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        btn_save.setOnClickListener(this)
+        super.onViewCreated(view, savedInstanceState)
     }
 
 }
