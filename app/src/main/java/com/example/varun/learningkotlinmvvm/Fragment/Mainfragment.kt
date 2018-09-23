@@ -26,6 +26,7 @@ class Mainfragment : Fragment(), View.OnClickListener {
                 mActivity.supportFragmentManager
                         .beginTransaction()
                         .replace(R.id.main, Writefragment.newInstance())
+                        .addToBackStack("")
                         .commit()
                 /*userViewModel!!.setData(ed_name!!.text.toString(),ed_email!!.text.toString())
                 ed_name!!.text=null
@@ -36,6 +37,7 @@ class Mainfragment : Fragment(), View.OnClickListener {
                 mActivity.supportFragmentManager
                         .beginTransaction()
                         .replace(R.id.main, Readfragment.newInstance())
+                        .addToBackStack("")
                         .commit()
             }
 
@@ -43,6 +45,7 @@ class Mainfragment : Fragment(), View.OnClickListener {
                 mActivity.supportFragmentManager
                         .beginTransaction()
                         .replace(R.id.main, ReadAllfragment.newInstance())
+                        .addToBackStack("")
                         .commit()
             }
         }
