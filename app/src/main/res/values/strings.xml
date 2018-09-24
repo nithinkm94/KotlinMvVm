@@ -2,10 +2,11 @@
     <string name="app_name">LearningKotlinMvVm</string>
     <string name="btn_txt_write">WRITE</string>
     <string name="btn_txt_read">READ</string>
-    <string name="btn_txt_readwrite">READ/WRITE</string>
+    <string name="btn_txt_readwrite">READ ALL</string>
     <string name="txt_hint_name">Name</string>
     <string name="txt_hint_email">Email</string>
     <string name="btn_save">Save</string>
     <string name="ed_read_id">ID</string>
     <string name="btn_search">Search</string>
+    <string name="btn_text_back">BACK</string>
 </resources>

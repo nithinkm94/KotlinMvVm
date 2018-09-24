@@ -1,95 +1,61 @@
 package com.example.varun.learningkotlinmvvm.ViewModel
 
-import android.arch.lifecycle.MutableLiveData
+import android.app.Application
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
 import android.util.Log
 import com.example.varun.learningkotlinmvvm.Model.User
-import com.example.varun.learningkotlinmvvm.db.UserDatabase
+import com.example.varun.learningkotlinmvvm.db.UserRepository
+import android.text.Editable
+
 
 class UserViewModel : ViewModel {
 
-    private var userDatabase: UserDatabase? = null
 
-    private var user: User? = null
+    private lateinit var userRepository: UserRepository
 
-    var id: Long? = null
-    var name = ""
-    var email = ""
+    private var allUsers: LiveData<List<User>>? = null
 
-    constructor() : super()
-    constructor(user: User) : super() {
-        this.id = user.id
-        this.name = user.name
-        this.email = user.email
+
+    var id: Int? = null
+    var name: String? = null
+    var email: String? = null
+
+    constructor() : super() {
+        this.userRepository = UserRepository(application = Application())
+        this.allUsers = userRepository!!.getAll()
     }
 
-    constructor(id: Long) : super() {
+
+    constructor(id: Int?, name: String?, email: String?) : super() {
         this.id = id
+        this.name = name
+        this.email = email
     }
 
 
-    var arraylistmutablelivedata = MutableLiveData<ArrayList<UserViewModel>>()
-    var usermutablelivedata = MutableLiveData<UserViewModel>()
 
-
-
-    fun getArrayList(): MutableLiveData<ArrayList<UserViewModel>> {
-        var arrayList = ArrayList<UserViewModel>()
-
-
-        var userView: UserViewModel? = null
-
-        val allusers =
-                userDatabase?.userDataDao()?.getAll()
-
-        if (allusers == null || allusers?.size == 0) {
-            Log.d("UserViewModel", "NULL")
-        } else {
-
-            for (i in allusers) {
-                userView = UserViewModel(i)
-                arrayList.add(userView)
-
-            }
-
-        }
-        /* val user1 = User(1, "varun", "v@g.com")
-         val user2 = User(2, "silpa", "s@g.com")
-
-
-         val userViewModel1: UserViewModel = UserViewModel(user1)
-         val userViewModel2: UserViewModel = UserViewModel(user2)
-
-
-         arrayList!!.add(userViewModel1)
-         arrayList!!.add(userViewModel2)*/
-
-        arraylistmutablelivedata.value = arrayList
-
-
-        return arraylistmutablelivedata
+    fun insert(user: User) {
+        userRepository.insert(user)
     }
 
+    fun getArrayList(): LiveData<List<User>> {
 
-    fun getUser(id: Long): MutableLiveData<UserViewModel> {
-        val user1 = User(1, "varun", "v@g.com")
-        val userViewModel1: UserViewModel = UserViewModel(user1)
-        usermutablelivedata.value = userViewModel1
-        var userView: UserViewModel? = null
+        return allUsers!!
+    }
 
-        val singleUser =
-                userDatabase?.userDataDao()?.loadSingle(id)
+    fun setData(name: String, email: String) {
+        var user: User = User(null, name, email)
 
-        if (singleUser == null) {
-            Log.d("UserViewModel", "NULL")
-        } else {
-            userView = UserViewModel(singleUser)
-            usermutablelivedata.value = userView
+            val addedID = insert(user)
+            Log.d("UserViewModel", "Inserted ID $addedID")
         }
 
 
+    fun searchUser(userId: String): LiveData<User> {
 
-        return usermutablelivedata
+        return userRepository.searchUser(Integer.parseInt(userId))
     }
+
 
 }
