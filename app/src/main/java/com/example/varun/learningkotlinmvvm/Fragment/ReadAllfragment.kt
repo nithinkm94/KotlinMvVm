@@ -12,10 +12,11 @@ import com.example.varun.learningkotlinmvvm.Adapter.ReadAllAdapter
 import com.example.varun.learningkotlinmvvm.MainActivity
 import com.example.varun.learningkotlinmvvm.R
 import com.example.varun.learningkotlinmvvm.ViewModel.UserViewModel
+import com.example.varun.learningkotlinmvvm.navigation.NavigationManager.Companion.obtainViewModel
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import kotlinx.android.synthetic.main.fragment_readwrite.*
+import kotlinx.android.synthetic.main.fragment_readall.*
 
 
 class ReadAllfragment:Fragment(){
@@ -33,8 +34,9 @@ class ReadAllfragment:Fragment(){
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        userViewModel = mActivity.obtainViewModel(UserViewModel::class.java)
 
-        userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
+        //userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
 
         userViewModel!!.getArrayList().observe(this, Observer { userViewModels ->
 
@@ -48,7 +50,7 @@ class ReadAllfragment:Fragment(){
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        return inflater?.inflate(R.layout.fragment_readwrite,container,false)
+        return inflater?.inflate(R.layout.fragment_readall, container, false)
     }
 
 
