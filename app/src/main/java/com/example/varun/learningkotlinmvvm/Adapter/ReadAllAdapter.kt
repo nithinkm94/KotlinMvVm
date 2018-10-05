@@ -21,7 +21,7 @@ class ReadAllAdapter(private val context: Context, private val arrayList: List<U
     }
 
     override fun getItemCount(): Int {
-        var count = arrayList.size
+
         return arrayList.size
     }
 

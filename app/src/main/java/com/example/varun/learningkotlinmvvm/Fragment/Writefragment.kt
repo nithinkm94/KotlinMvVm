@@ -37,8 +37,6 @@ class Writefragment : Fragment(), View.OnClickListener, showSnackbar {
                 userViewModel.setData(ed_name.getText().toString(), ed_email.getText().toString())
             }
 
-            else -> {
-            }
         }
     }
 
